@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italiano Facile</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terra:#C1440E;--terra-l:#E8A87C;
+  --cream:#FAF6EF;--warm:#FFF9F2;
+  --olive:#6B7C3D;--olive-l:#A4B465;
+  --esp:#2C1810;--gold:#C9A84C;
+  --fog:#E8DDD0;--sh:rgba(44,24,16,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--esp);min-height:100vh;
+  background-image:radial-gradient(ellipse at 10% 20%,rgba(193,68,14,.06) 0%,transparent 50%),
+  radial-gradient(ellipse at 90% 80%,rgba(107,124,61,.06) 0%,transparent 50%);}
+
+/* HEADER */
+header{background:var(--esp);padding:1.1rem 2rem;display:flex;align-items:center;gap:1rem;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.25);}
+header h1{font-family:'Playfair Display',serif;color:var(--cream);font-size:1.45rem;}
+header h1 span{color:var(--terra-l);font-style:italic;}
+.hbtns{margin-left:auto;display:flex;gap:.5rem;}
+.hbtn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--fog);
+  border-radius:20px;padding:.3rem .9rem;font-family:'Lato',sans-serif;font-size:.78rem;
+  font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem;}
+.hbtn:hover{background:var(--terra);border-color:var(--terra);color:white;}
+.libcount{background:var(--terra);color:white;border-radius:50%;width:18px;height:18px;
+  font-size:.65rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+
+.container{max-width:960px;margin:0 auto;padding:2rem 1.5rem 5rem;}
+
+/* LIBRARY PANEL */
+.lib-ov{display:none;position:fixed;inset:0;background:rgba(44,24,16,.45);z-index:300;}
+.lib-ov.open{display:flex;align-items:flex-start;justify-content:flex-end;}
+.lib-panel{background:var(--warm);width:min(440px,100vw);height:100vh;overflow-y:auto;
+  box-shadow:-4px 0 30px rgba(0,0,0,.2);display:flex;flex-direction:column;}
+.lib-hdr{background:var(--esp);padding:1.1rem 1.5rem;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:10;flex-shrink:0;}
+.lib-hdr h3{font-family:'Playfair Display',serif;color:var(--cream);font-size:1rem;}
+.lib-hdr-btns{display:flex;gap:.4rem;align-items:center;}
+.lib-hbtn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:var(--fog);
+  border-radius:8px;padding:.25rem .65rem;font-size:.72rem;font-family:'Lato',sans-serif;
+  cursor:pointer;font-weight:700;transition:all .15s;}
+.lib-hbtn:hover{background:var(--olive);border-color:var(--olive);color:white;}
+.lib-x{background:none;border:none;color:var(--fog);font-size:1.4rem;cursor:pointer;padding:.2rem;}
+.lib-empty{padding:2rem;text-align:center;color:var(--esp);opacity:.4;font-style:italic;font-size:.9rem;}
+.lib-entry{border-bottom:1px solid var(--fog);padding:1rem 1.5rem;display:flex;flex-direction:column;gap:.3rem;}
+.lib-etitle{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--terra);}
+.lib-emeta{font-size:.7rem;color:var(--esp);opacity:.5;display:flex;gap:.5rem;flex-wrap:wrap;}
+.lib-eacts{display:flex;gap:.4rem;margin-top:.3rem;flex-wrap:wrap;}
+.lib-eact{background:none;border:1.5px solid var(--fog);border-radius:8px;padding:.2rem .6rem;
+  font-size:.72rem;font-family:'Lato',sans-serif;cursor:pointer;color:var(--esp);transition:all .15s;}
+.lib-eact:hover{border-color:var(--terra);color:var(--terra);}
+.lib-eact.tr{border-color:var(--olive);color:var(--olive);}
+.lib-eact.tr:hover{background:var(--olive);color:white;}
+.lib-eact.dl:hover{border-color:#c00;color:#c00;}
+
+/* TRAINER */
+.tr-ov{display:none;position:fixed;inset:0;background:var(--esp);z-index:400;
+  flex-direction:column;align-items:center;overflow:hidden;}
+.tr-ov.open{display:flex;}
+.tr-top{background:rgba(0,0,0,.3);width:100%;padding:.85rem 1.5rem;display:flex;
+  align-items:center;gap:1rem;flex-shrink:0;}
+.tr-top h3{font-family:'Playfair Display',serif;color:var(--cream);font-size:1rem;flex:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tr-x{background:none;border:none;color:var(--fog);font-size:1.4rem;cursor:pointer;}
+.tr-progwrap{height:4px;background:rgba(255,255,255,.1);flex:1;border-radius:2px;overflow:hidden;}
+.tr-progfill{height:100%;background:var(--olive-l);border-radius:2px;transition:width .4s ease;}
+.tr-proglbl{color:var(--fog);font-size:.75rem;white-space:nowrap;}
+.tr-bar{display:flex;gap:.4rem;padding:.8rem 1.5rem;background:rgba(0,0,0,.2);
+  flex-shrink:0;justify-content:center;}
+.tr-dirbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  color:var(--fog);border-radius:20px;padding:.3rem .85rem;font-family:'Lato',sans-serif;
+  font-size:.78rem;cursor:pointer;transition:all .15s;}
+.tr-dirbtn:hover{background:rgba(255,255,255,.15);}
+.tr-body{flex:1;display:flex;align-items:center;justify-content:center;padding:1.5rem;width:100%;}
+
+/* FLASHCARD */
+.fc-wrap{perspective:1000px;width:min(400px,100%);height:220px;cursor:pointer;}
+.fc{width:100%;height:100%;position:relative;transform-style:preserve-3d;
+  transition:transform .5s ease;border-radius:20px;}
+.fc.flipped{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;text-align:center;}
+.fc-front{background:var(--warm);box-shadow:0 8px 32px rgba(0,0,0,.3);}
+.fc-back{background:var(--esp);border:2px solid var(--olive);box-shadow:0 8px 32px rgba(0,0,0,.4);transform:rotateY(180deg);}
+.fc-word{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--terra);margin-bottom:.5rem;}
+.fc-back .fc-word{color:var(--olive-l);}
+.fc-type{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--esp);opacity:.4;}
+.fc-back .fc-type{color:var(--fog);opacity:.5;}
+.fc-hint{font-size:.78rem;color:var(--esp);opacity:.3;margin-top:.6rem;font-style:italic;}
+.fc-back .fc-hint{color:var(--fog);opacity:.35;}
+.fc-tap{font-size:.7rem;color:var(--esp);opacity:.25;margin-top:.8rem;}
+.fc-back .fc-tap{color:var(--fog);opacity:.25;}
+.fc-acts{display:flex;gap:.75rem;margin-top:1.4rem;justify-content:center;}
+.fcbtn{border:none;border-radius:12px;padding:.6rem 1.4rem;font-family:'Lato',sans-serif;
+  font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.fcbtn.k{background:var(--olive);color:white;}
+.fcbtn.k:hover{background:#556330;}
+.fcbtn.d{background:rgba(193,68,14,.8);color:white;}
+.fcbtn.d:hover{background:var(--terra);}
+.fcbtn.s{background:rgba(255,255,255,.1);color:var(--fog);border:1px solid rgba(255,255,255,.2);}
+.tr-done{text-align:center;color:var(--cream);padding:2rem;}
+.tr-score{font-size:3rem;font-weight:700;color:var(--olive-l);margin-bottom:.3rem;}
+.tr-done h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.5rem;}
+.tr-done p{opacity:.7;font-size:.9rem;margin-bottom:1.5rem;}
+.tr-done-btns{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
+.tr-dbtn{border:none;border-radius:12px;padding:.65rem 1.3rem;font-family:'Lato',sans-serif;
+  font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.tr-dbtn.r{background:var(--terra);color:white;}
+.tr-dbtn.r:hover{background:#A8390C;}
+.tr-dbtn.c{background:rgba(255,255,255,.12);color:var(--fog);border:1px solid rgba(255,255,255,.2);}
+
+/* Floating trainer launch bar */
+.tlaunch{position:fixed;bottom:1.5rem;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--esp);border-radius:30px;padding:.7rem 1.4rem;
+  display:flex;align-items:center;gap:.9rem;
+  box-shadow:0 6px 24px rgba(0,0,0,.35);z-index:150;
+  transition:transform .3s ease,opacity .3s ease;
+  opacity:0;pointer-events:none;white-space:nowrap;}
+.tlaunch.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;}
+.tl-cnt{color:var(--fog);font-size:.82rem;}
+.tl-cnt b{color:var(--terra-l);}
+.tl-go{background:var(--olive);color:white;border:none;border-radius:20px;
+  padding:.45rem 1.1rem;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;
+  cursor:pointer;transition:all .2s;}
+.tl-go:hover{background:#556330;}
+.tl-clr{background:none;border:none;color:var(--fog);opacity:.6;cursor:pointer;
+  font-size:1rem;padding:.2rem .4rem;transition:opacity .2s;}
+.tl-clr:hover{opacity:1;}
+
+/* LOOKUP MODAL */
+.lk-ov{display:none;position:fixed;inset:0;background:rgba(44,24,16,.5);z-index:500;
+  align-items:center;justify-content:center;padding:1rem;}
+.lk-ov.open{display:flex;}
+.lk-box{background:var(--warm);border-radius:16px;padding:1.6rem;width:min(360px,100%);
+  box-shadow:0 8px 40px rgba(0,0,0,.3);}
+.lk-box h4{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--terra);margin-bottom:.5rem;}
+.lk-word{font-size:1.3rem;font-family:'Playfair Display',serif;font-style:italic;color:var(--esp);margin-bottom:.8rem;}
+.lk-res{font-size:.92rem;line-height:1.55;color:var(--esp);margin-bottom:1rem;min-height:2em;}
+.lk-acts{display:flex;gap:.5rem;justify-content:flex-end;}
+.lkbtn{border:none;border-radius:9px;padding:.5rem 1rem;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;}
+.lkbtn.add{background:var(--olive);color:white;}
+.lkbtn.add:disabled{opacity:.4;cursor:not-allowed;}
+.lkbtn.can{background:var(--fog);color:var(--esp);}
+
+/* CONTROL PANEL */
+.cpanel{background:var(--warm);border:1px solid var(--fog);border-radius:16px;
+  padding:1.6rem 1.8rem;margin-bottom:1.5rem;box-shadow:0 4px 24px var(--sh);}
+.cpanel h2{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--terra);margin-bottom:1.2rem;}
+.crow{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;margin-bottom:1.3rem;}
+.crow:last-child{margin-bottom:0;}
+.cg{display:flex;flex-direction:column;gap:.4rem;flex:1;min-width:140px;}
+.cg label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--esp);opacity:.55;}
+input[type=text]{font-family:'Lato',sans-serif;font-size:.9rem;padding:.55rem .85rem;
+  border:1.5px solid var(--fog);border-radius:8px;background:var(--cream);color:var(--esp);
+  transition:border-color .2s;}
+input[type=text]:focus{outline:none;border-color:var(--terra);}
+.chips{display:flex;gap:.35rem;flex-wrap:wrap;}
+.chip{border:1.5px solid var(--fog);background:var(--cream);color:var(--esp);
+  padding:.32rem .72rem;border-radius:20px;font-size:.76rem;font-weight:700;
+  cursor:pointer;transition:all .18s;font-family:'Lato',sans-serif;white-space:nowrap;
+  user-select:none;}
+.chip:hover{border-color:var(--terra);color:var(--terra);}
+.chip.on{background:var(--terra);border-color:var(--terra);color:white;}
+.chip.on.grn{background:var(--olive);border-color:var(--olive);}
+.chip.on.gld{background:#8B6914;border-color:#8B6914;}
+.chip.on.blu{background:#2563EB;border-color:#2563EB;}
+.divider{border:none;border-top:1px solid var(--fog);margin:1.1rem 0;}
+.genbtn{background:var(--terra);color:white;border:none;padding:.72rem 1.8rem;
+  border-radius:10px;font-family:'Lato',sans-serif;font-size:.95rem;font-weight:700;
+  cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:.45rem;
+  box-shadow:0 3px 12px rgba(193,68,14,.3);margin-top:.6rem;}
+.genbtn:hover{background:#A8390C;transform:translateY(-1px);}
+.genbtn:active{transform:translateY(0);}
+.genbtn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:2.5rem;color:var(--terra);}
+.loading.on{display:block;}
+.dots{display:inline-flex;gap:6px;margin-bottom:.8rem;}
+.dots span{width:9px;height:9px;background:var(--terra);border-radius:50%;animation:bop 1.2s infinite;}
+.dots span:nth-child(2){animation-delay:.2s;}
+.dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bop{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
+.loading p{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;opacity:.8;}
+
+/* STORY */
+.ssec{display:none;}
+.ssec.on{display:block;animation:up .45s ease;}
+@keyframes up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.shdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.5rem;}
+.stitle{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--esp);}
+.smeta{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
+.badge{background:var(--terra);color:white;padding:.18rem .6rem;border-radius:12px;font-size:.7rem;font-weight:700;}
+.badge.g{background:var(--olive);}
+.badge.y{background:#8B6914;}
+
+.swrap{position:relative;padding-bottom:10px;}
+.trans-btn{position:absolute;bottom:-2px;right:0;background:var(--esp);color:var(--fog);
+  border:none;border-radius:20px;padding:.3rem .85rem;font-family:'Lato',sans-serif;
+  font-size:.74rem;font-weight:700;cursor:pointer;display:none;align-items:center;gap:.35rem;
+  box-shadow:0 2px 10px rgba(44,24,16,.22);transition:all .2s;z-index:10;}
+.trans-btn:hover{background:var(--terra);color:white;}
+.trans-btn.show{display:flex;}
+.trans-btn.on{background:var(--olive);color:white;}
+.trans-panel{display:none;margin-top:1.2rem;background:var(--warm);border:1.5px solid var(--fog);
+  border-left:4px solid var(--olive);border-radius:0 16px 16px 0;padding:1.5rem 2rem;
+  box-shadow:0 4px 24px var(--sh);}
+.trans-panel.on{display:block;animation:up .3s ease;}
+.trans-lbl{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--olive);margin-bottom:.85rem;}
+.trans-panel p{font-family:'Lato',sans-serif;font-size:.98rem;line-height:1.78;
+  color:var(--esp);opacity:.82;margin-bottom:.9em;}
+.trans-panel p:last-child{margin-bottom:0;}
+
+.scard{background:var(--warm);border:1px solid var(--fog);border-radius:16px;
+  padding:1.8rem 2.2rem;box-shadow:0 4px 24px var(--sh);position:relative;}
+.scard::before{content:'"';font-family:'Playfair Display',serif;font-size:8rem;
+  color:var(--terra);opacity:.07;position:absolute;top:-1rem;left:1.5rem;line-height:1;pointer-events:none;}
+.scard p{font-family:'Lato',sans-serif;font-size:1.06rem;line-height:1.85;color:var(--esp);
+  font-weight:400;letter-spacing:.01em;margin-bottom:1.1em;}
+.scard p:last-child{margin-bottom:0;}
+.scard.pick p{cursor:crosshair;}
+.scard.pick .uw{cursor:pointer;border-bottom:2px dashed rgba(193,68,14,.4);border-radius:2px;transition:background .15s;}
+.scard.pick .uw:hover{background:rgba(193,68,14,.12);}
+
+/* VOCAB HIGHLIGHT */
+.vw{background:linear-gradient(120deg,rgba(201,168,76,.2),rgba(201,168,76,.35));
+  border-bottom:2px solid var(--gold);border-radius:3px;padding:0 2px;cursor:pointer;
+  position:relative;display:inline-block;transition:background .2s;}
+.vw:hover,.vw.ta{background:linear-gradient(120deg,rgba(201,168,76,.55),rgba(201,168,76,.7));}
+.vw .tt{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--esp);color:var(--cream);padding:.38rem .8rem;border-radius:9px;font-size:.82rem;
+  white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .18s;z-index:60;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);font-style:italic;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:var(--esp);}
+.vw:hover .tt,.vw.ta .tt{opacity:1;}
+
+/* ADD-WORD BAR */
+.awbar{margin-top:1rem;display:none;align-items:center;gap:.6rem;flex-wrap:wrap;}
+.awbar.on{display:flex;}
+.awinfo{font-size:.82rem;color:var(--esp);opacity:.7;flex:1;}
+.awtgl{background:var(--warm);border:1.5px solid var(--fog);border-radius:20px;padding:.32rem .8rem;
+  font-family:'Lato',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--esp);}
+.awtgl:hover{border-color:var(--terra);color:var(--terra);}
+.awtgl.on{background:var(--terra);border-color:var(--terra);color:white;}
+
+/* CHAT */
+.chat{display:none;margin-top:1.4rem;}
+.chat.on{display:block;animation:up .4s ease;}
+.cbub{display:flex;gap:.75rem;margin-bottom:.85rem;align-items:flex-start;}
+.cav{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.cav.ai{background:var(--esp);}
+.cav.usr{background:var(--olive);}
+.cmsg{border-radius:14px;padding:.72rem 1rem;font-size:.91rem;line-height:1.55;max-width:85%;}
+.cbub.ai .cmsg{background:#F0EBE3;border-top-left-radius:4px;}
+.cbub.usr .cmsg{background:#EAF0E4;border-top-right-radius:4px;margin-left:auto;}
+.cbub.usr{flex-direction:row-reverse;}
+.cqbtns{display:flex;flex-wrap:wrap;gap:.45rem;margin:.45rem 0 1rem 2.4rem;}
+.qbtn{border:1.5px solid var(--fog);background:var(--warm);padding:.36rem .78rem;
+  border-radius:20px;font-family:'Lato',sans-serif;font-size:.8rem;cursor:pointer;transition:all .2s;color:var(--esp);}
+.qbtn:hover{border-color:var(--terra);color:var(--terra);}
+.qbtn.cf{border-color:var(--olive);color:var(--olive);font-weight:700;}
+.qbtn.cf:hover{background:var(--olive);color:white;}
+.cinrow{display:flex;gap:.5rem;margin-top:.5rem;}
+.cin{flex:1;font-family:'Lato',sans-serif;font-size:.9rem;padding:.58rem .88rem;
+  border:1.5px solid var(--fog);border-radius:10px;background:var(--cream);color:var(--esp);transition:border-color .2s;}
+.cin:focus{outline:none;border-color:var(--terra);}
+.csbtn{background:var(--esp);color:var(--cream);border:none;padding:.58rem 1rem;
+  border-radius:10px;cursor:pointer;font-size:1rem;transition:all .2s;}
+.csbtn:hover{background:var(--terra);}
+.csbtn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* VOCAB SECTION */
+.vsec{margin-top:2rem;display:none;}
+.vsec.on{display:block;animation:up .45s ease;}
+.vsec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem;}
+.vsec-hdr h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--esp);}
+.vdirbtn{background:var(--warm);border:1.5px solid var(--fog);border-radius:20px;padding:.3rem .85rem;
+  font-family:'Lato',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--esp);}
+.vdirbtn:hover{border-color:var(--terra);color:var(--terra);}
+.vctls{display:flex;gap:.45rem;margin-bottom:1rem;flex-wrap:wrap;}
+.vctl{background:var(--cream);border:1.5px solid var(--fog);border-radius:8px;padding:.36rem .82rem;
+  font-family:'Lato',sans-serif;font-size:.78rem;cursor:pointer;transition:all .2s;font-weight:700;}
+.vctl:hover{border-color:var(--olive);color:var(--olive);}
+.vctl.on{background:var(--olive);border-color:var(--olive);color:white;}
+.pbwrap{height:4px;background:var(--fog);border-radius:2px;margin-bottom:1rem;overflow:hidden;}
+.pb{height:100%;background:var(--olive-l);border-radius:2px;transition:width .4s ease;width:0%;}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.65rem;}
+.vc{background:var(--warm);border:1.5px solid var(--fog);border-radius:12px;
+  padding:.85rem 1rem;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px var(--sh);
+  position:relative;user-select:none;-webkit-user-select:none;}
+.vc:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 16px var(--sh);}
+.vc.ua{border-color:rgba(193,68,14,.35);background:#FFF7F4;}
+.vc.kn{opacity:.5;}
+.vc.lps{border-color:var(--olive);background:rgba(107,124,61,.08);box-shadow:0 0 0 2px var(--olive-l);transform:scale(1.02);}
+.vc.lps .vpri{color:var(--olive);}
+.vc.lpp{transform:scale(.97);border-color:var(--gold);}
+.vc .lpbadge{display:none;position:absolute;top:.4rem;right:.5rem;background:var(--olive);
+  color:white;border-radius:50%;width:18px;height:18px;font-size:.65rem;
+  align-items:center;justify-content:center;font-weight:700;}
+.vc.lps .lpbadge{display:flex;}
+.vtype{font-size:.65rem;color:var(--esp);opacity:.4;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.12rem;}
+.vpri{font-weight:700;font-size:.97rem;color:var(--terra);font-family:'Playfair Display',serif;transition:color .2s;}
+.vsec2{font-size:.86rem;color:var(--esp);margin-top:.18rem;opacity:0;transition:opacity .3s;min-height:1.2em;font-style:italic;}
+.vc.rev .vsec2{opacity:1;}
+.vhint{font-size:.67rem;color:var(--olive);margin-top:.2rem;opacity:.7;}
+.vc.rev .vhint{display:none;}
+.orn{text-align:center;color:var(--gold);font-size:1.1rem;margin:1.5rem 0;letter-spacing:.5rem;opacity:.55;}
+.err{display:none;background:#FFF3F0;border:1.5px solid var(--terra);border-radius:12px;
+  padding:1.1rem;color:var(--terra);font-size:.88rem;margin-top:1rem;}
+.err.on{display:block;}
+
+.save-bar{display:none;align-items:center;gap:.75rem;flex-wrap:wrap;
+  background:var(--warm);border:1.5px solid var(--fog);border-radius:14px;
+  padding:.9rem 1.2rem;margin-top:1.2rem;box-shadow:0 2px 10px var(--sh);}
+.save-bar.on{display:flex;}
+.save-info{font-size:.84rem;color:var(--esp);opacity:.7;flex:1;}
+.save-btn{background:var(--terra);color:white;border:none;border-radius:10px;
+  padding:.5rem 1.2rem;font-family:'Lato',sans-serif;font-size:.88rem;font-weight:700;
+  cursor:pointer;transition:all .2s;white-space:nowrap;}
+.save-btn:hover{background:#A8390C;transform:translateY(-1px);}
+.save-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.save-done{font-size:.88rem;color:var(--olive);font-weight:700;}
+@keyframes toastFade{0%{opacity:1;transform:translateX(-50%) translateY(0);}100%{opacity:0;transform:translateX(-50%) translateY(-12px);}}
+@media(max-width:640px){
+  .scard{padding:1.2rem 1.3rem;}
+  .crow{flex-direction:column;}
+  .genbtn{width:100%;justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span style="font-size:1.6rem">🇮🇹</span>
+  <h1>Italiano <span>Facile</span></h1>
+  <div class="hbtns">
+    <button class="hbtn" onclick="openLib()">📚 Gespeichert <span class="libcount" id="libCount">0</span></button>
+    <button class="hbtn" onclick="openLibForTrainer()">🎯 Trainer <span class="libcount" id="poolCount">0</span></button>
+  </div>
+</header>
+
+<!-- LIBRARY -->
+<div class="lib-ov" id="libOv" onclick="libBgClick(event)">
+  <div class="lib-panel">
+    <div class="lib-hdr">
+      <h3>📚 Gespeicherte Texte</h3>
+      <div class="lib-hdr-btns">
+        <button class="lib-x" onclick="closeLib()">✕</button>
+      </div>
+    </div>
+    <div id="libList"></div>
+  </div>
+</div>
+
+<!-- TRAINER -->
+<div class="tr-ov" id="trOv">
+  <div class="tr-top">
+    <button class="tr-x" onclick="closeTrainer()">✕</button>
+    <h3 id="trTitle">Vokabeltrainer</h3>
+    <div class="tr-progwrap"><div class="tr-progfill" id="trFill"></div></div>
+    <span class="tr-proglbl" id="trLbl">0/0</span>
+  </div>
+  <div class="tr-bar">
+    <button class="tr-dirbtn" id="trDirBtn" onclick="toggleTrDir()">🇮🇹→🇩🇪</button>
+  </div>
+  <div class="tr-body" id="trBody"></div>
+</div>
+
+<!-- LOOKUP -->
+<div class="lk-ov" id="lkOv">
+  <div class="lk-box">
+    <h4>Wort nachschlagen</h4>
+    <div class="lk-word" id="lkWord">—</div>
+    <div class="lk-res" id="lkRes"></div>
+    <div class="lk-acts">
+      <button class="lkbtn can" onclick="closeLk()">Abbrechen</button>
+      <button class="lkbtn add" id="lkAdd" onclick="addLkWord()" disabled>+ Zur Liste</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRAINER LAUNCH BAR -->
+<div class="tlaunch" id="tlaunch">
+  <span class="tl-cnt"><b id="tlCount">0</b> Wörter ausgewählt</span>
+  <button class="tl-go" onclick="addSelToPool()">➕ Zum Trainer hinzufügen</button>
+  <button class="tl-clr" onclick="clearSel()" title="Auswahl aufheben">✕</button>
+</div>
+
+<div class="container">
+  <div class="cpanel">
+    <h2>⚙️ Geschichte konfigurieren</h2>
+    <div class="crow">
+      <div class="cg">
+        <label>Schwierigkeitsgrad</label>
+        <div class="chips" id="lvlSel">
+          <button class="chip on" data-v="A1">A1</button>
+          <button class="chip" data-v="A2">A2</button>
+          <button class="chip" data-v="B1">B1</button>
+          <button class="chip" data-v="B2">B2</button>
+          <button class="chip" data-v="C1">C1</button>
+        </div>
+      </div>
+      <div class="cg" style="min-width:180px">
+        <label>Thema (optional)</label>
+        <input type="text" id="topic" placeholder="z.B. Markt, Reise, Familie…">
+      </div>
+    </div>
+    <div class="crow">
+      <div class="cg">
+        <label>Länge</label>
+        <div class="chips" id="lenSel">
+          <button class="chip grn" data-v="80" data-lbl="Kurz ~80">Kurz ~80</button>
+          <button class="chip grn on" data-v="150" data-lbl="Mittel ~150">Mittel ~150</button>
+          <button class="chip grn" data-v="250" data-lbl="Lang ~250">Lang ~250</button>
+          <button class="chip grn" data-v="400" data-lbl="Intensiv ~400">Intensiv ~400</button>
+          <button class="chip grn" data-v="600" data-lbl="Kurzgeschichte ~600">Kurzgeschichte ~600</button>
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="crow">
+      <div class="cg">
+        <label>📚 Lernfokus</label>
+        <div class="chips" id="fokSel">
+          <button class="chip gld on" data-v="">Kein Fokus</button>
+          <button class="chip gld" data-v="mit vielen wörtlichen Dialogen (übt direkte Rede)">💬 Dialoge</button>
+          <button class="chip gld" data-v="mit reichem Erzählstil: detaillierte Beschreibungen von Orten, Personen und Abläufen — kaum Dialog, dafür viele Adjektive, Sinneseindrücke und lebendige Schilderungen">🎨 Beschreibend</button>
+          <button class="chip gld" data-v="hauptsächlich in der Vergangenheit (passato prossimo / imperfetto)">⏮ Vergangenheit</button>
+          <button class="chip gld" data-v="mit Zukunftsformen und Plänen">⏭ Zukunft</button>
+          <button class="chip gld" data-v="mit alltäglichem Vokabular aus Einkaufen, Essen, Familie">🛒 Alltagswortschatz</button>
+          <button class="chip gld" data-v="mit Konjunktiv (congiuntivo) — nur für B2/C1 geeignet">🎓 Konjunktiv</button>
+        </div>
+      </div>
+    </div>
+    <div class="crow">
+      <div class="cg">
+        <label>🧭 Perspektive &amp; Ton</label>
+        <div class="chips" id="perSel">
+          <button class="chip blu on" data-v="">Beliebig</button>
+          <button class="chip blu" data-v="aus der Ich-Perspektive">Ich-Erzähler</button>
+          <button class="chip blu" data-v="aus der Er/Sie-Perspektive">Er/Sie</button>
+          <button class="chip blu" data-v="in lockerem, umgangssprachlichem Ton">Umgangssprache</button>
+          <button class="chip blu" data-v="in formellem, elegantem Ton">Formell</button>
+          <button class="chip blu" data-v="mit einem poetischen, bildreichen Stil">Poetisch</button>
+        </div>
+      </div>
+    </div>
+    <button class="genbtn" id="genBtn" onclick="generate()">✨ Geschichte erzeugen</button>
+  </div>
+
+  <div class="err" id="errBox"></div>
+  <div class="loading" id="loading">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <p id="loadMsg">Die Geschichte wird geschrieben…</p>
+  </div>
+
+  <div class="ssec" id="ssec">
+    <div class="shdr">
+      <h2 class="stitle" id="stitle">—</h2>
+      <div class="smeta" id="smeta"></div>
+    </div>
+
+    <div class="swrap">
+      <div class="scard" id="scard"></div>
+      <button class="trans-btn" id="transBtn" onclick="toggleTrans()">🇩🇪 Übersetzung</button>
+    </div>
+    <div class="trans-panel" id="transPanel">
+      <div class="trans-lbl">🇩🇪 Wörtliche deutsche Übersetzung</div>
+      <div id="transTxt"></div>
+    </div>
+
+    <div class="awbar" id="awbar">
+      <span class="awinfo">Unbekanntes Wort im Text? Tippe es an:</span>
+      <button class="awtgl" id="awtgl" onclick="togglePick()">✚ Wort hinzufügen</button>
+    </div>
+
+    <div class="chat on" id="chat">
+      <div id="chatMsgs"></div>
+      <div class="cqbtns" id="qbtns">
+        <button class="qbtn cf" onclick="confirm_()">✅ Passt! → Vokabeln &amp; Übersetzung</button>
+        <button class="qbtn" onclick="qsend('Mach die Geschichte etwas länger')">➕ Länger</button>
+        <button class="qbtn" onclick="qsend('Mach die Geschichte etwas kürzer')">➖ Kürzer</button>
+        <button class="qbtn" onclick="qsend('Schreibe eine komplett neue Geschichte zum gleichen Thema')">🔄 Neu</button>
+        <button class="qbtn" onclick="qsend('Mach die Geschichte einfacher')">📉 Einfacher</button>
+        <button class="qbtn" onclick="qsend('Mach die Geschichte schwieriger')">📈 Schwieriger</button>
+        <button class="qbtn" onclick="qsend('Füge mehr Dialog hinzu')">💬 Mehr Dialog</button>
+        <button class="qbtn" onclick="qsend('Mach das Ende spannender')">🎬 Besseres Ende</button>
+      </div>
+      <div class="cinrow">
+        <input type="text" class="cin" id="cin" placeholder="Eigene Änderung…" onkeydown="if(event.key==='Enter')csend()">
+        <button class="csbtn" id="csbtn" onclick="csend()">➤</button>
+      </div>
+    </div>
+
+    <div class="orn" id="orn" style="display:none">✦ ✦ ✦</div>
+
+    <!-- SAVE BAR -->
+    <div class="save-bar" id="saveBar">
+      <span class="save-info">📖 Geschichte gefällt dir? Für späteres Üben speichern:</span>
+      <button class="save-btn" id="saveBtn" onclick="saveStory()">💾 Geschichte speichern</button>
+      <span class="save-done" id="saveDone" style="display:none">✅ Gespeichert!</span>
+    </div>
+
+    <div class="vsec" id="vsec">
+      <div class="vsec-hdr">
+        <h3>📖 Vokabelliste</h3>
+        <button class="vdirbtn" id="vdirBtn" onclick="toggleVDir()">🇮🇹 → 🇩🇪</button>
+      </div>
+      <div class="vctls">
+        <button class="vctl on" onclick="setVM('hs')">Übersetzung verstecken</button>
+        <button class="vctl" onclick="setVM('hp')">Original verstecken</button>
+        <button class="vctl" onclick="setVM('sa')">Alle anzeigen</button>
+        <button class="vctl" onclick="revAll()">✓ Alle aufdecken</button>
+        <button class="vctl" onclick="rstAll()">↺ Zurücksetzen</button>
+      </div>
+      <div class="pbwrap"><div class="pb" id="pb"></div></div>
+      <div class="vgrid" id="vgrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── STATE ── */
+let lvl='A1', wc=150, wcLbl='Mittel ~150', fok='', per='';
+let vmode='hs', vdir='it-de';
+let vocab=[], revealed=0;
+let storyRaw='', storyTitle='', transTxt='';
+let hist=[], pickOn=false, lkPending=null;
+let trCards=[], trIdx=0, trOk=0, trDir='it-de';
+let lpSel=new Set(), lpTimer=null;
+const LP=500;
+
+/* ── CHIP SETUP ── */
+function chipSetup(id, cb) {
+  document.querySelectorAll('#'+id+' .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#'+id+' .chip').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      cb(btn);
+    });
+  });
+}
+chipSetup('lvlSel', b => lvl = b.dataset.v);
+chipSetup('lenSel', b => { wc = parseInt(b.dataset.v); wcLbl = b.dataset.lbl; });
+chipSetup('fokSel', b => fok = b.dataset.v);
+chipSetup('perSel', b => per = b.dataset.v);
+
+/* ── HELPERS ── */
+const $=id=>document.getElementById(id);
+const showLoad=msg=>{ $('loadMsg').textContent=msg||'…'; $('loading').classList.add('on'); };
+const hideLoad=()=>$('loading').classList.remove('on');
+
+function chatMsg(role, html) {
+  const d=document.createElement('div');
+  d.className='cbub '+role;
+  d.innerHTML=`<div class="cav ${role}">${role==='ai'?'🤖':'👤'}</div><div class="cmsg">${html}</div>`;
+  $('chatMsgs').appendChild(d);
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+async function ai(messages, sys, max=1000) {
+  const body={model:'claude-sonnet-4-20250514',max_tokens:max,messages};
+  if(sys) body.system=sys;
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const data=await r.json();
+  if(data.error) throw new Error(data.error.message);
+  const text=data.content.map(b=>b.text||'').join('');
+  let parsed=null;
+  try{parsed=JSON.parse(text.replace(/```json|```/g,'').trim());}catch{}
+  return{text,parsed};
+}
+
+function mkParas(t) {
+  return t.split(/\n{2,}/).map(p=>p.replace(/\n/g,' ').trim()).filter(Boolean).map(p=>`<p>${p}</p>`).join('');
+}
+
+/* ── GENERATE ── */
+async function generate() {
+  const topic=$('topic').value.trim();
+  const btn=$('genBtn'), err=$('errBox');
+  const style=[fok&&`Lernfokus: ${fok}`,per&&`Ton: ${per}`].filter(Boolean);
+  const sb=style.length?'\nStilvorgaben:\n'+style.map(s=>'- '+s).join('\n'):'';
+
+  btn.disabled=true;
+  showLoad(wc>=400?'Kurzgeschichte wird geschrieben…':'Die Geschichte wird geschrieben…');
+  $('ssec').classList.remove('on');
+  $('vsec').classList.remove('on');
+  $('orn').style.display='none';
+  $('chatMsgs').innerHTML='';
+  $('awbar').classList.remove('on');
+  $('saveBar').classList.remove('on');
+  $('saveBtn').disabled=false;
+  $('saveBtn').style.display='';
+  $('saveDone').style.display='none';
+  $('transBtn').classList.remove('show','on');
+  $('transPanel').classList.remove('on');
+  err.classList.remove('on');
+  vocab=[];transTxt='';pickOn=false;clearSel();
+
+  const prompt=`Schreibe eine italienische Lerngeschichte für Niveau ${lvl}.\n${topic?`Thema: "${topic}".`:''}\nLänge: ca. ${wc} Wörter.${sb}\nNUR JSON: {"title":"Titel","story":"Text"}`;
+  hist=[{role:'user',content:prompt}];
+  try {
+    const{text,parsed}=await ai(hist,'Du bist Italienisch-Sprachlehrer. Antworte ausschließlich mit gültigem JSON.',wc>=400?3000:1500);
+    if(!parsed) throw new Error('Kein gültiges JSON.');
+    hist.push({role:'assistant',content:text});
+    storyRaw=parsed.story; storyTitle=parsed.title;
+    showStory(parsed);
+    chatMsg('ai','✨ <b>Ecco la storia!</b><br><br>Lies sie durch — passt sie so?');
+  } catch(e) { err.textContent='❌ '+e.message; err.classList.add('on'); }
+  finally { btn.disabled=false; hideLoad(); }
+}
+
+function showStory(data) {
+  $('stitle').textContent=data.title||'Una storia';
+  $('smeta').innerHTML=`<span class="badge">${lvl}</span><span class="badge g">${wcLbl}</span>${fok?'<span class="badge y">Fokus</span>':''}`;
+  $('scard').innerHTML=mkParas(data.story||'');
+  $('ssec').classList.add('on');
+  $('chat').classList.add('on');
+  $('qbtns').style.display='flex';
+  setTimeout(()=>$('ssec').scrollIntoView({behavior:'smooth'}),80);
+}
+
+/* ── CHAT ── */
+async function csend() {
+  const inp=$('cin'), msg=inp.value.trim(); if(!msg) return;
+  inp.value=''; chatMsg('usr',msg); await modify(msg);
+}
+function qsend(msg) { chatMsg('usr',msg); modify(msg); }
+
+async function modify(ins) {
+  $('csbtn').disabled=true; $('qbtns').style.display='none';
+  showLoad('Geschichte wird angepasst…');
+  hist.push({role:'user',content:`Ändere: "${ins}"\nTitel: ${storyTitle}\nText: ${storyRaw}\nNUR JSON: {"title":"...","story":"..."}`});
+  try {
+    const{text,parsed}=await ai(hist,'Du bist Italienisch-Sprachlehrer. Antworte ausschließlich mit gültigem JSON.',wc>=400?3000:1500);
+    if(!parsed) throw new Error('Ungültiges JSON');
+    hist.push({role:'assistant',content:text});
+    storyRaw=parsed.story; storyTitle=parsed.title;
+    showStory(parsed);
+    chatMsg('ai','✅ Erledigt! Gefällt dir die neue Version?');
+    $('qbtns').style.display='flex';
+  } catch(e) { chatMsg('ai','❌ '+e.message); $('qbtns').style.display='flex'; }
+  finally { hideLoad(); $('csbtn').disabled=false; }
+}
+
+/* ── CONFIRM ── */
+async function confirm_() {
+  $('qbtns').style.display='none';
+  chatMsg('usr','✅ Passt! Bitte Vokabeln & Übersetzung.');
+  chatMsg('ai','🔤 Perfetto! Erstelle Vokabeln und Übersetzung…');
+  showLoad('Vokabeln & Übersetzung werden erstellt…');
+
+  const cnt=wc>=400?'16-24':'11-16';
+  const vp=`Extrahiere ${cnt} niveaugerechte Vokabeln (${lvl}) aus dieser Geschichte.\nText: ${storyRaw}\nWICHTIG: KEINE Grundwörter (essere,avere,andare,fare,io,tu,il,la,e,di,un,per,che,con,a,in). Nur lernwürdige, kontextspezifische Wörter.\nNUR JSON-Array: [{"italian":"...","german":"...","type":"..."}]`;
+  const tp=`Übersetze wörtlich ins Deutsche. Absätze beibehalten. Nur der Text.\nText: ${storyRaw}`;
+
+  try {
+    const [vr, tr_] = await Promise.all([
+      ai([{role:'user',content:vp}], null, 1800),
+      ai([{role:'user',content:tp}], 'Nur der übersetzte Text.', wc>=400?2500:1200)
+    ]);
+    if(!Array.isArray(vr.parsed)) throw new Error('Vokabel-Fehler');
+    vocab=vr.parsed; transTxt=tr_.text.trim();
+    applyHighlights(); renderVocab(); renderTrans();
+    $('orn').style.display='block';
+    $('vsec').classList.add('on');
+    $('chat').classList.remove('on');
+    $('transBtn').classList.add('show');
+    $('awbar').classList.add('on');
+    $('saveBar').classList.add('on');
+    setTimeout(()=>$('scard').scrollIntoView({behavior:'smooth',block:'start'}),120);
+  } catch(e) { chatMsg('ai','❌ '+e.message); $('qbtns').style.display='flex'; }
+  finally { hideLoad(); }
+}
+
+/* ── TRANSLATION ── */
+function renderTrans() {
+  $('transTxt').innerHTML=mkParas(transTxt);
+}
+function toggleTrans() {
+  const p=$('transPanel'), b=$('transBtn');
+  const open=p.classList.contains('on');
+  p.classList.toggle('on',!open);
+  b.classList.toggle('on',!open);
+  b.textContent=open?'🇩🇪 Übersetzung':'🇩🇪 Verbergen';
+  if(!open) p.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ── VOCAB DIRECTION ── */
+function toggleVDir() {
+  vdir=vdir==='it-de'?'de-it':'it-de';
+  $('vdirBtn').textContent=vdir==='it-de'?'🇮🇹 → 🇩🇪':'🇩🇪 → 🇮🇹';
+  vmode='hs';
+  document.querySelectorAll('.vctl').forEach((b,i)=>b.classList.toggle('on',i===0));
+  renderVocab();
+}
+
+/* ── HIGHLIGHTS ── */
+function applyHighlights() {
+  const paras=storyRaw.split(/\n{2,}/).map(p=>p.replace(/\n/g,' ').trim()).filter(Boolean);
+  const sorted=[...vocab].sort((a,b)=>b.italian.length-a.italian.length);
+  $('scard').innerHTML=paras.map(para=>{
+    let h=para;
+    sorted.forEach(v=>{
+      const e=v.italian.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      h=h.replace(new RegExp(`(?<![\\wÀ-ÿ])(${e})(?![\\wÀ-ÿ])`,'gi'),
+        m=>`<span class="vw" ontouchstart="tw(this)" ontouchend="tw(this,1)">${m}<span class="tt">🇩🇪 ${v.german}</span></span>`);
+    });
+    return `<p>${h}</p>`;
+  }).join('');
+  $('scard').classList.remove('pick');
+}
+function tw(el,end){if(end)setTimeout(()=>el.classList.remove('ta'),1500);else el.classList.add('ta');}
+
+/* ── ADD WORD ── */
+function togglePick() {
+  pickOn=!pickOn;
+  $('scard').classList.toggle('pick',pickOn);
+  $('awtgl').textContent=pickOn?'✕ Beenden':'✚ Wort hinzufügen';
+  $('awtgl').classList.toggle('on',pickOn);
+  if(pickOn) wrapUnknown(); else applyHighlights();
+}
+function wrapUnknown() {
+  $('scard').querySelectorAll('p').forEach(p=>{
+    p.innerHTML=p.innerHTML.replace(/(?<![<\w])([a-zA-ZÀ-ÿ''\-]{2,})(?![>\w])/g,
+      (m,w)=>`<span class="uw" onclick="lookupW('${w.replace(/'/g,"\\'")}', this)">${w}</span>`);
+  });
+}
+async function lookupW(word) {
+  if(!pickOn) return;
+  if(vocab.some(v=>v.italian.toLowerCase()===word.toLowerCase())){
+    showLk(word,'✅ Bereits in der Vokabelliste.',null); return;
+  }
+  showLk(word,'<em style="opacity:.5">Wird übersetzt…</em>',null);
+  try {
+    const{parsed}=await ai([{role:'user',content:`Übersetze "${word}" ins Deutsche. NUR JSON: {"italian":"${word}","german":"...","type":"..."}`}],null,200);
+    if(parsed&&parsed.german) showLk(word,`<b>${parsed.german}</b> <em>(${parsed.type||''})</em>`,parsed);
+    else showLk(word,'⚠️ Nicht gefunden.',null);
+  } catch(e) { showLk(word,'❌ '+e.message,null); }
+}
+function showLk(w,html,data){
+  lkPending=data; $('lkWord').textContent=w; $('lkRes').innerHTML=html;
+  $('lkAdd').disabled=!data; $('lkOv').classList.add('open');
+}
+function closeLk(){$('lkOv').classList.remove('open');lkPending=null;}
+function addLkWord(){
+  if(!lkPending) return;
+  vocab.push({...lkPending,userAdded:true}); closeLk();
+  applyHighlights(); renderVocab();
+  pickOn=false; $('scard').classList.remove('pick');
+  $('awtgl').textContent='✚ Wort hinzufügen'; $('awtgl').classList.remove('on');
+  updLibVocab();
+  $('vsec').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ── VOCAB LIST ── */
+function setVM(m){
+  vmode=m;
+  document.querySelectorAll('.vctl').forEach((b,i)=>b.classList.toggle('on',i===['hs','hp','sa'].indexOf(m)));
+  rstAll();
+}
+function updPb(){if(!vocab.length)return;$('pb').style.width=(revealed/vocab.length*100)+'%';}
+function revAll(){document.querySelectorAll('.vc').forEach(c=>c.classList.add('rev'));revealed=vocab.length;updPb();}
+function rstAll(){document.querySelectorAll('.vc').forEach(c=>c.classList.remove('rev'));revealed=0;updPb();renderVocab();}
+
+function renderVocab(){
+  const g=$('vgrid'); g.innerHTML=''; revealed=0; updPb();
+  lpSel.clear(); updLaunch();
+  vocab.forEach((v,i)=>{
+    const c=document.createElement('div');
+    c.className='vc'+(v.userAdded?' ua':'')+(v.known?' kn':'');
+    const pri=vdir==='it-de'?v.italian:v.german;
+    const sec=vdir==='it-de'?v.german:v.italian;
+    const hp=vmode==='hp';
+    c.innerHTML=`<div class="lpbadge">✓</div><div class="vtype">${v.type||''}</div>
+      <div class="vpri">${hp?'?????':pri}</div><div class="vsec2">${sec}</div>
+      ${vmode!=='sa'?'<div class="vhint">Gedrückt halten → Zum Trainer hinzufügen · Tippen → Aufdecken</div>':''}`;
+    if(vmode==='sa'){c.classList.add('rev');}
+    else{
+      c.addEventListener('click',()=>{
+        if(!c.classList.contains('lps')&&!c.classList.contains('rev')){
+          c.classList.add('rev');
+          if(hp) c.querySelector('.vpri').textContent=pri;
+          revealed++; updPb();
+        }
+      });
+    }
+    attachLP(c,i);
+    g.appendChild(c);
+  });
+}
+
+/* ── LONG PRESS ── */
+function attachLP(el,idx){
+  const start=()=>{
+    el.classList.add('lpp');
+    lpTimer=setTimeout(()=>{
+      el.classList.remove('lpp');
+      toggleLP(el,idx);
+      if(navigator.vibrate) navigator.vibrate(40);
+    },LP);
+  };
+  const cancel=()=>{clearTimeout(lpTimer);el.classList.remove('lpp');};
+  el.addEventListener('mousedown',start);
+  el.addEventListener('touchstart',start,{passive:true});
+  el.addEventListener('mouseup',cancel);
+  el.addEventListener('mouseleave',cancel);
+  el.addEventListener('touchend',cancel);
+  el.addEventListener('touchcancel',cancel);
+}
+function toggleLP(el,idx){
+  if(lpSel.has(idx)){
+    lpSel.delete(idx); el.classList.remove('lps');
+  } else {
+    lpSel.add(idx); el.classList.add('lps');
+    // Brief toast feedback
+    const t=document.createElement('div');
+    t.textContent='✓ Hinzugefügt';
+    t.style.cssText='position:absolute;top:-.3rem;left:50%;transform:translateX(-50%);background:var(--olive);color:white;border-radius:8px;padding:.2rem .6rem;font-size:.7rem;font-weight:700;white-space:nowrap;animation:toastFade .9s ease forwards;pointer-events:none;z-index:20;';
+    el.appendChild(t);
+    setTimeout(()=>t.remove(),900);
+  }
+  updLaunch();
+}
+function clearSel(){
+  lpSel.clear();
+  document.querySelectorAll('.vc.lps').forEach(c=>c.classList.remove('lps'));
+  updLaunch();
+}
+function updLaunch(){
+  const n=lpSel.size; $('tlCount').textContent=n;
+  $('tlaunch').classList.toggle('show',n>0);
+}
+async function addSelToPool(){
+  const cards=[...lpSel].map(i=>({...vocab[i],srcTitle:storyTitle||''}));
+  if(!cards.length) return;
+  try{
+    const r=await storageGet('italiano:trainerPool');
+    let pool=r?JSON.parse(r):[];
+    let added=0;
+    cards.forEach(c=>{
+      if(!pool.some(p=>p.italian===c.italian)){pool.push(c);added++;}
+    });
+    await storageSet('italiano:trainerPool',JSON.stringify(pool));
+    updPoolCount(pool.length);
+    // Toast confirmation
+    const t=document.createElement('div');
+    t.textContent=added>0?`✓ ${added} Wörter hinzugefügt`:'Bereits im Pool';
+    t.style.cssText='position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:var(--olive);color:white;border-radius:12px;padding:.5rem 1.2rem;font-family:Lato,sans-serif;font-size:.85rem;font-weight:700;z-index:200;animation:toastFade 1.8s ease forwards;pointer-events:none;';
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(),1800);
+  }catch(ex){console.warn(ex);}
+  clearSel();
+}
+async function launchFromSel(){
+  const cards=[...lpSel].map(i=>({...vocab[i],srcTitle:storyTitle||''}));
+  if(!cards.length) return;
+  clearSel();
+  startTrainer(shuffle(cards),`Trainer — ${cards.length} Wörter`);
+}
+
+function updPoolCount(n){ const el=$('poolCount'); if(el) el.textContent=n||''; }
+
+/* ── TRAINER ── */
+function closeTrainer(){$('trOv').classList.remove('open');}
+function toggleTrDir(){
+  trDir=trDir==='it-de'?'de-it':'it-de';
+  $('trDirBtn').textContent=trDir==='it-de'?'🇮🇹→🇩🇪':'🇩🇪→🇮🇹';
+  renderCard();
+}
+function updTrProg(){
+  const t=trCards.length;
+  $('trFill').style.width=t?(trIdx/t*100)+'%':'0%';
+  $('trLbl').textContent=`${trIdx}/${t}`;
+}
+function startTrainer(cards,title){
+  trCards=cards; trIdx=0; trOk=0;
+  $('trTitle').textContent=title||'Vokabeltrainer';
+  updTrProg(); $('trOv').classList.add('open'); renderCard();
+}
+function renderCard(){
+  const body=$('trBody');
+  if(trIdx>=trCards.length){renderDone();return;}
+  const card=trCards[trIdx];
+  const q=trDir==='it-de'?card.italian:card.german;
+  const a=trDir==='it-de'?card.german:card.italian;
+  body.innerHTML=`<div>
+    <div class="fc-wrap" onclick="flipCard()">
+      <div class="fc" id="fc">
+        <div class="fc-face fc-front">
+          <div class="fc-type">${card.type||''}</div>
+          <div class="fc-word">${q}</div>
+          <div class="fc-tap">Tippen zum Umdrehen</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-type">${card.type||''}</div>
+          <div class="fc-word">${a}</div>
+          <div class="fc-hint">${card.srcTitle||card.sourceTitle||''}</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-acts">
+      <button class="fcbtn d" onclick="trNext(false)">✗ Nicht gewusst</button>
+      <button class="fcbtn s" onclick="trNext(null)">→ Überspringen</button>
+      <button class="fcbtn k" onclick="trNext(true)">✓ Gewusst</button>
+    </div>
+  </div>`;
+}
+function flipCard(){$('fc')?.classList.toggle('flipped');}
+function trNext(knew){
+  if(knew===true){trOk++;trCards[trIdx].known=true;}
+  trIdx++; updTrProg(); renderCard(); saveKnown();
+}
+function renderDone(){
+  const pct=trCards.length?Math.round(trOk/trCards.length*100):0;
+  const em=pct>=80?'🎉':pct>=50?'👍':'💪';
+  $('trBody').innerHTML=`<div class="tr-done">
+    <div class="tr-score">${pct}%</div>
+    <h3>${em} ${pct>=80?'Ottimo lavoro!':pct>=50?'Bene!':'Ancora pratica!'}</h3>
+    <p>${trOk} von ${trCards.length} Wörtern gewusst.</p>
+    <div class="tr-done-btns">
+      <button class="tr-dbtn r" onclick="retryAll()">🔄 Nochmal</button>
+      <button class="tr-dbtn r" onclick="retryWrong()" style="background:#8B6914">✗ Nur Falsche</button>
+      <button class="tr-dbtn c" onclick="closeTrainer()">Schließen</button>
+      <button class="tr-dbtn c" onclick="clearPool()" style="font-size:.75rem;opacity:.6">🗑 Pool leeren</button>
+    </div>
+  </div>`;
+}
+function retryAll(){trIdx=0;trOk=0;trCards=shuffle(trCards);updTrProg();renderCard();}
+function retryWrong(){
+  const w=trCards.filter(c=>!c.known);
+  if(!w.length){alert('Alle Wörter gewusst! 🎉');return;}
+  trCards=shuffle(w);trIdx=0;trOk=0;updTrProg();renderCard();
+}
+function shuffle(a){return a.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);}
+
+/* ── LIBRARY ── */
+async function saveStory(){
+  const btn=$('saveBtn');
+  btn.disabled=true;
+  await saveLib();
+  btn.style.display='none';
+  $('saveDone').style.display='inline';
+  $('save-info') // no-op
+}
+async function saveLib(){
+  const e={id:Date.now(),date:new Date().toLocaleDateString('de-AT',{day:'2-digit',month:'2-digit',year:'numeric'}),
+    title:storyTitle,level:lvl,wc:wcLbl,story:storyRaw,translation:transTxt,vocab};
+  try{
+    let list=[];
+    try{const r=await storageGet('italiano:lib');if(r)list=JSON.parse(r);}catch{}
+    list.unshift(e); if(list.length>50)list=list.slice(0,50);
+    await storageSet('italiano:lib',JSON.stringify(list));
+    updLibCount(list.length);
+  }catch(e){console.warn(e);}
+}
+async function updLibVocab(){
+  try{
+    const r=await storageGet('italiano:lib'); if(!r) return;
+    const list=JSON.parse(r);
+    if(list.length&&list[0].title===storyTitle){list[0].vocab=vocab;await storageSet('italiano:lib',JSON.stringify(list));}
+  }catch{}
+}
+async function saveKnown(){
+  try{
+    const r=await storageGet('italiano:lib'); if(!r) return;
+    const list=JSON.parse(r);
+    trCards.forEach(tc=>{
+      const e=list.find(x=>x.title===tc.srcTitle||x.title===tc.sourceTitle);
+      if(!e||!e.vocab) return;
+      const v=e.vocab.find(v=>v.italian===tc.italian);
+      if(v&&tc.known) v.known=true;
+    });
+    await storageSet('italiano:lib',JSON.stringify(list));
+  }catch{}
+}
+async function clearPool(){
+  if(!confirm('Trainer-Pool leeren?')) return;
+  try{
+    await storageSet('italiano:trainerPool',JSON.stringify([]));
+    updPoolCount(0); closeTrainer();
+  }catch{}
+}
+async function openLibForTrainer(){
+  try{
+    const r=await storageGet('italiano:trainerPool');
+    const pool=r?JSON.parse(r):[];
+    if(!pool.length){
+      alert('Noch keine Wörter im Trainer-Pool.\n\nVokabelkarten lange drücken (0.5s) um Wörter hinzuzufügen.');
+      return;
+    }
+    startTrainer(shuffle(pool),`Vokabeltrainer — ${pool.length} Wörter`);
+  }catch(ex){alert('Fehler: '+ex.message);}
+}
+async function openLib(){
+  $('libOv').classList.add('open');
+  const list=$('libList'); list.innerHTML='<div class="lib-empty">Wird geladen…</div>';
+  try{
+    const r=await storageGet('italiano:lib');
+    const entries=r?JSON.parse(r):[];
+    updLibCount(entries.length);
+    if(!entries.length){list.innerHTML='<div class="lib-empty">Noch keine Texte gespeichert.</div>';return;}
+    list.innerHTML='';
+    entries.forEach(e=>{
+      const d=document.createElement('div'); d.className='lib-entry';
+      d.innerHTML=`<div class="lib-etitle">${e.title||'—'}</div>
+        <div class="lib-emeta"><span>${e.date||''}</span><span>${e.level||''}</span><span>${e.wc||''}</span><span>${e.vocab?e.vocab.length+' Vokabeln':''}</span></div>
+        <div class="lib-eacts">
+          <button class="lib-eact" onclick="loadLib(${e.id})">📖 Öffnen</button>
+          <button class="lib-eact dl" id="del-${e.id}" onclick="confirmDel(${e.id})">🗑 Löschen</button>
+        </div>`;
+      list.appendChild(d);
+    });
+  }catch(ex){list.innerHTML=`<div class="lib-empty">Fehler: ${ex.message}</div>`;}
+}
+function closeLib(){$('libOv').classList.remove('open');}
+function libBgClick(e){if(e.target===$('libOv'))closeLib();}
+function updLibCount(n){const el=$('libCount');if(el)el.textContent=n;}
+
+async function loadLib(id){
+  closeLib();
+  try{
+    const r=await storageGet('italiano:lib');
+    const e=JSON.parse(r).find(x=>x.id===id); if(!e) return;
+    storyRaw=e.story; storyTitle=e.title; transTxt=e.translation||''; vocab=e.vocab||[];
+    lvl=e.level||'A1';
+    $('chatMsgs').innerHTML=''; $('chat').classList.remove('on');
+    $('orn').style.display='block';
+    $('stitle').textContent=e.title;
+    $('smeta').innerHTML=`<span class="badge">${e.level||''}</span><span class="badge g">${e.wc||''}</span>`;
+    applyHighlights(); renderVocab(); renderTrans();
+    $('ssec').classList.add('on'); $('vsec').classList.add('on');
+    $('awbar').classList.add('on'); $('transBtn').classList.add('show');
+    // Already saved — show confirmed state
+    $('saveBar').classList.add('on');
+    $('saveBtn').style.display='none';
+    $('saveDone').style.display='inline';
+    $('transPanel').classList.remove('on'); $('transBtn').classList.remove('on');
+    $('transBtn').textContent='🇩🇪 Übersetzung';
+    setTimeout(()=>$('ssec').scrollIntoView({behavior:'smooth'}),80);
+  }catch(ex){alert('Fehler: '+ex.message);}
+}
+async function trainerLib(id){
+  closeLib();
+  try{
+    const r=await storageGet('italiano:lib');
+    const e=JSON.parse(r).find(x=>x.id===id); if(!e) return;
+    startTrainer(shuffle((e.vocab||[]).map(v=>({...v,srcTitle:e.title}))),e.title);
+  }catch(ex){alert('Fehler: '+ex.message);}
+}
+function confirmDel(id){
+  const btn=document.getElementById('del-'+id);
+  if(!btn) return;
+  if(btn.dataset.confirm==='1'){
+    delLib(id);
+  } else {
+    btn.textContent='⚠️ Sicher?';
+    btn.dataset.confirm='1';
+    btn.style.borderColor='#c00';
+    btn.style.color='#c00';
+    // Auto-reset after 3s
+    setTimeout(()=>{
+      if(btn&&btn.dataset.confirm==='1'){
+        btn.textContent='🗑 Löschen';
+        btn.dataset.confirm='';
+        btn.style.borderColor='';
+        btn.style.color='';
+      }
+    },3000);
+  }
+}
+async function delLib(id){
+  try{
+    const r=await storageGet('italiano:lib');
+    if(!r) return;
+    const list=JSON.parse(r).filter(x=>x.id!==id);
+    await storageSet('italiano:lib',JSON.stringify(list));
+    updLibCount(list.length);
+    openLib();
+  }catch(ex){alert('Fehler: '+ex.message);}
+}
+
+/* ── STORAGE WRAPPER ── */
+const memStore={};
+async function storageGet(key){
+  try{
+    const r=await window.storage.get(key);
+    return r?r.value:null;
+  }catch{return memStore[key]||null;}
+}
+async function storageSet(key,val){
+  memStore[key]=val;
+  try{await window.storage.set(key,val);}catch{/* memory fallback */}
+}
+(async()=>{
+  try{const r=await storageGet('italiano:lib');updLibCount(r?JSON.parse(r).length:0);}catch{}
+  try{const r=await storageGet('italiano:trainerPool');updPoolCount(r?JSON.parse(r).length:0);}catch{}
+})();
+</script>
+</body>
+</html>
